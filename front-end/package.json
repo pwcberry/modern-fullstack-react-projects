@@ -1,8 +1,9 @@
 {
-  "name": "modern-fullstack-react-projects-ch01",
+  "name": "modern-fullstack-react-projects-front-end",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "vite --port 4000",
     "build": "vite build",
