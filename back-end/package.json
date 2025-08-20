@@ -11,7 +11,7 @@
     "lint:fix": "eslint --fix .",
     "pretty": "prettier --write .",
     "start": "node --env-file=.env server.js",
-    "test": "jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "license": "UNLICENSED",
   "dependencies": {
