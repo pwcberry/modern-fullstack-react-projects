@@ -19,3 +19,15 @@ export async function listPostsByAuthor(author, options) {
 export async function listPostsByTag(tags, options) {
   return await listPosts({ tags }, options);
 }
+
+export async function getPostById(id) {
+  return Post.findById(id);
+}
+
+export async function updatePost(id, { title, author, contents, tags }) {
+  return Post.findOneAndUpdate({ _id: id }, { $set: { title, author, contents, tags } }, { new: true });
+}
+
+export async function deletePost(id) {
+  return Post.deleteOne({ _id: id });
+}

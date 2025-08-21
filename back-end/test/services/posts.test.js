@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
-import { describe, expect, test, beforeEach } from "@jest/globals";
-import { createPost, listAllPosts, listPostsByAuthor, listPostsByTag } from "../../src/services/posts.js";
+import { beforeEach, describe, expect, test } from "@jest/globals";
+import {
+  createPost,
+  deletePost,
+  getPostById,
+  listAllPosts,
+  listPostsByAuthor,
+  listPostsByTag,
+  updatePost,
+} from "../../src/services/posts.js";
 import { Post } from "../../src/db/models/post.js";
 
 const samplePosts = [
@@ -13,6 +21,8 @@ const samplePosts = [
   },
   { title: "Guide to TypeScript" },
 ];
+
+const UNKNOWN_POST_ID = "000000000000000000000000";
 
 describe("Posts", () => {
   let createdSamplePosts = [];
@@ -81,18 +91,80 @@ describe("Posts", () => {
       // that Jest will attempt to compare
       expect(posts.map((p) => p.createdAt)).toEqual(sortedSamplePosts.map((p) => p.createdAt));
     });
+
+    test("list all posts by 'updatedAt' ascending: it should succeed", async () => {
+      const posts = await listAllPosts({ sortBy: "updatedAt", sortOrder: "ascending" });
+      const sortedSamplePosts = createdSamplePosts.sort((a, b) => a.updatedAt - b.updatedAt);
+      expect(posts.map((p) => p.updatedAt)).toEqual(sortedSamplePosts.map((p) => p.updatedAt));
+    });
+
+    test("list posts filtered by author: it should succeed", async () => {
+      const posts = await listPostsByAuthor("Daniel Bugl");
+      expect(posts.length).toBe(3);
+    });
+
+    test("list posts filtered by tag: it should succeed", async () => {
+      const posts = await listPostsByTag("nodejs");
+      expect(posts.length).toBe(1);
+    });
   });
-  test("list all posts by 'updatedAt' ascending: it should succeed", async () => {
-    const posts = await listAllPosts({ sortBy: "updatedAt", sortOrder: "ascending" });
-    const sortedSamplePosts = createdSamplePosts.sort((a, b) => a.updatedAt - b.updatedAt);
-    expect(posts.map((p) => p.updatedAt)).toEqual(sortedSamplePosts.map((p) => p.updatedAt));
+
+  describe("get", () => {
+    test("get post by id: it should succeed", async () => {
+      const post = await getPostById(createdSamplePosts[0]._id);
+      expect(post.toObject()).toEqual(createdSamplePosts[0].toObject());
+    });
+
+    test("get post by unknown id: it should fail", async () => {
+      const post = await getPostById(UNKNOWN_POST_ID);
+      expect(post).toBeNull();
+    });
   });
-  test("list posts filtered by author: it should succeed", async () => {
-    const posts = await listPostsByAuthor("Daniel Bugl");
-    expect(posts.length).toBe(3);
+
+  describe("update", () => {
+    test("update specific property: it should succeed", async () => {
+      await updatePost(createdSamplePosts[0]._id, {
+        author: "Anton Chekhov",
+      });
+
+      const updatedPost = await getPostById(createdSamplePosts[0]._id);
+      expect(updatedPost.author).toEqual("Anton Chekhov");
+    });
+
+    test("update specific property: it should not commit other changes", async () => {
+      await updatePost(createdSamplePosts[0]._id, {
+        author: "Anton Chekhov",
+      });
+
+      const updatedPost = await getPostById(createdSamplePosts[0]._id);
+      expect(updatedPost.title).toEqual("Learning Redux");
+    });
+
+    test("update post: it should change the timestamp", async () => {
+      await updatePost(createdSamplePosts[0]._id, {
+        author: "Anton Chekhov",
+      });
+
+      const updatedPost = await getPostById(createdSamplePosts[0]._id);
+      expect(updatedPost.updatedAt.getTime()).toBeGreaterThan(createdSamplePosts[0].updatedAt.getTime());
+    });
+
+    test("update post with unknown id: it should fail", async () => {
+      const post = await updatePost(UNKNOWN_POST_ID, { title: "R Barthes" });
+      expect(post).toBeNull();
+    });
   });
-  test("list posts filtered by tag: it should succeed", async () => {
-    const posts = await listPostsByTag("nodejs");
-    expect(posts.length).toBe(1);
+
+  describe("delete", () => {
+    test("delete post: it should succeed", async () => {
+      const result = await deletePost(createdSamplePosts[0]._id);
+      expect(result.deletedCount).toBe(1);
+      const deletedPost = await getPostById(createdSamplePosts[0]._id);
+      expect(deletedPost).toBeNull();
+    });
+    test("delete post with unknown id: it should fail", async () => {
+      const result = await deletePost(UNKNOWN_POST_ID);
+      expect(result.deletedCount).toBe(0);
+    });
   });
 });
