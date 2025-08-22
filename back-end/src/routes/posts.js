@@ -1,5 +1,4 @@
 import * as service from "../services/posts.js";
-import app from "../app.js";
 
 function mountGetRoutes(app) {
   app.get("/api/v1/posts", async (req, res) => {
