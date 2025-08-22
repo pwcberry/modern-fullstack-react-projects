@@ -1,4 +1,32 @@
-### GET request to back-end server
-GET http://localhost:8080/
+### Sample routes to test the API
 
 ###
+GET http://localhost:3000/api/v1/posts?tag=mongoose
+
+###
+GET http://localhost:3000/api/v1/posts/68996cdb4fb3b4bb9f172f25
+
+###
+POST http://localhost:3000/api/v1/posts
+Content-Type: application/json
+
+{
+  "title": "Using MongoDB with Node.js",
+  "author": "Mongo Team",
+  "tags": ["course","learn","mongo"]
+}
+
+###
+PATCH http://localhost:3000/api/v1/posts/68a7b82d9e65e7317e50cab3
+Content-Type: application/json
+
+{
+  "title": "Using MongoDB with Node.js",
+  "author": "Mongo Team",
+  "contents": "This course guides you through everything you need to get started with MongoDB in your NodeJS applications.",
+  "tags": ["course","learn","mongo"]
+}
+
+###
+DELETE http://localhost:3000/api/v1/posts/68a7b82d9e65e7317e50cab3
+

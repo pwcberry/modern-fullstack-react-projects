@@ -1,8 +1,10 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 import * as Posts from "./routes/posts.js";
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 Posts.mountRoutes(app);
