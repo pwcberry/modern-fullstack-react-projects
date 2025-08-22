@@ -1,0 +1,12 @@
+{
+  "verbose": true,
+  "watch": [
+    "./src",
+    "package-lock.json"
+  ],
+  "env": {
+    "DATABASE_URL": "mongodb://127.0.0.1:10000/blog",
+    "PORT": 3000
+  },
+  "ext": "js,json"
+}
