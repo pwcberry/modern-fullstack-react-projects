@@ -1,7 +1,7 @@
 name: "Modern Full-stack React Projects"
 services:
   database:
-    image: mongodb/mongodb-community-server:7.0.12-ubi9
+    image: mongodb/mongodb-community-server:8.0-ubi9-slim
     ports:
       - "10000:27017"
     volumes:
