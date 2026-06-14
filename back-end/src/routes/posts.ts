@@ -1,8 +1,9 @@
-import * as service from "../services/posts.js";
+import * as service from "../services/posts.ts";
+import type { Express, Request, Response } from "express";
 
-function mountGetRoutes(app) {
-  app.get("/api/v1/posts", async (req, res) => {
-    const { sortby, orderby, author, tag } = req.query;
+function mountGetRoutes(app: Express): void {
+  app.get("/api/v1/posts", async (req: Request, res: Response) => {
+    const { sortby, orderby, author, tag } = req.query as Record<string, any>;
     const options = { sortBy: sortby, sortOrder: orderby };
 
     try {
@@ -10,10 +11,10 @@ function mountGetRoutes(app) {
         return res.status(400).json({ error: "Query by either author or tag, not both" });
       }
       else if (author) {
-        return res.json(await service.listPostsByAuthor(author, options));
+        return res.json(await service.listPostsByAuthor(author as string, options));
       }
       else if (tag) {
-        return res.json(await service.listPostsByTag(tag, options));
+        return res.json(await service.listPostsByTag(tag as string, options));
       }
       else {
         return res.json(await service.listAllPosts(options));
@@ -25,8 +26,8 @@ function mountGetRoutes(app) {
     }
   });
 
-  app.get("/api/v1/posts/:id", async (req, res) => {
-    const { id } = req.params;
+  app.get("/api/v1/posts/:id", async (req: Request, res: Response) => {
+    const { id } = req.params as Record<string, string>; // Force the type analyzer to recognize this as a single value
     try {
       const post = await service.getPostById(id);
       if (post === null) {
@@ -41,8 +42,8 @@ function mountGetRoutes(app) {
   });
 }
 
-function mountPostRoutes(app) {
-  app.post("/api/v1/posts", async (req, res) => {
+function mountPostRoutes(app: Express): void {
+  app.post("/api/v1/posts", async (req: Request, res: Response) => {
     try {
       const post = await service.createPost(req.body);
       return res.json(post);
@@ -54,10 +55,11 @@ function mountPostRoutes(app) {
   });
 }
 
-function mountPatchRoutes(app) {
-  app.patch("/api/v1/posts/:id", async (req, res) => {
+function mountPatchRoutes(app: Express): void {
+  app.patch("/api/v1/posts/:id", async (req: Request, res: Response) => {
     try {
-      const post = await service.updatePost(req.params.id, req.body);
+      const { id } = req.params as Record<string, string>; // Force the type analyzer to recognize this as a single value
+      const post = await service.updatePost(id, req.body);
       return res.json(post);
     }
     catch (error) {
@@ -67,10 +69,11 @@ function mountPatchRoutes(app) {
   });
 }
 
-function mountDeleteRoutes(app) {
-  app.delete("/api/v1/posts/:id", async (req, res) => {
+function mountDeleteRoutes(app: Express): void {
+  app.delete("/api/v1/posts/:id", async (req: Request, res: Response) => {
     try {
-      const { deletedCount } = await service.deletePost(req.params.id);
+      const { id } = req.params as Record<string, string>; // Force the type analyzer to recognize this as a single value
+      const { deletedCount } = await service.deletePost(id);
       if (deletedCount === 0) {
         return res.status(404).end();
       }
@@ -83,9 +86,12 @@ function mountDeleteRoutes(app) {
   });
 }
 
-export function mountRoutes(app) {
+export function mountRoutes(app: Express): void {
   mountGetRoutes(app);
   mountPostRoutes(app);
   mountPatchRoutes(app);
   mountDeleteRoutes(app);
 }
+
+
+

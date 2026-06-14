@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "description": "",
   "type": "module",
-  "main": "server.js",
+  "main": "dist/server.js",
+  "files": ["dist/**/*.js"],
   "scripts": {
     "dev": "nodemon server.js",
     "init:db": "docker compose up",
     "lint": "eslint .",
     "format": "eslint --fix .",
-    "start": "node --env-file=.env server.js",
+    "start": "node --env-file=.env dist/server.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "license": "UNLICENSED",
@@ -24,6 +25,8 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/body-parser": "^1.19.6",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.9.3",
     "eslint": "^9.39.4",
