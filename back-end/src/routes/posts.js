@@ -8,14 +8,18 @@ function mountGetRoutes(app) {
     try {
       if (author && tag) {
         return res.status(400).json({ error: "Query by either author or tag, not both" });
-      } else if (author) {
+      }
+      else if (author) {
         return res.json(await service.listPostsByAuthor(author, options));
-      } else if (tag) {
+      }
+      else if (tag) {
         return res.json(await service.listPostsByTag(tag, options));
-      } else {
+      }
+      else {
         return res.json(await service.listAllPosts(options));
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error("Cannot list posts", error);
       return res.status(500).end();
     }
@@ -29,7 +33,8 @@ function mountGetRoutes(app) {
         return res.status(404).end();
       }
       return res.json(post);
-    } catch (error) {
+    }
+    catch (error) {
       console.error("Cannot retrieve post", error);
       return res.status(500).end();
     }
@@ -41,7 +46,8 @@ function mountPostRoutes(app) {
     try {
       const post = await service.createPost(req.body);
       return res.json(post);
-    } catch (error) {
+    }
+    catch (error) {
       console.error("Cannot create post", error);
       return res.status(500).end();
     }
@@ -53,7 +59,8 @@ function mountPatchRoutes(app) {
     try {
       const post = await service.updatePost(req.params.id, req.body);
       return res.json(post);
-    } catch (error) {
+    }
+    catch (error) {
       console.error("Cannot update post", error);
       return res.status(500).end();
     }
@@ -68,7 +75,8 @@ function mountDeleteRoutes(app) {
         return res.status(404).end();
       }
       return res.status(204).end();
-    } catch (error) {
+    }
+    catch (error) {
       console.error("Cannot delete post", error);
       return res.status(500).end();
     }

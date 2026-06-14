@@ -9,8 +9,7 @@
     "dev": "nodemon server.js",
     "init:db": "docker compose up",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
-    "pretty": "prettier --write .",
+    "format": "eslint --fix .",
     "start": "node --env-file=.env server.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
@@ -23,17 +22,21 @@
     "mongoose": "^8.17.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.32.0",
-    "eslint": "^9.32.0",
-    "globals": "^16.3.0",
+    "@eslint/js": "^9.39.4",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.3",
+    "eslint": "^9.39.4",
+    "globals": "^16.5.0",
     "jest": "^30.0.5",
     "mongodb-memory-server": "^10.2.0",
     "nodemon": "^3.1.10",
-    "prettier": "^3.6.2"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.0",
+    "vitest": "^4.1.8"
   },
   "lint-staged": {
     "**/*.js": [
-      "npx prettier --write",
       "npx lint --fix"
     ]
   }

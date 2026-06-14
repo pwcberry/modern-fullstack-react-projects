@@ -63,7 +63,8 @@ describe("Posts", () => {
 
       try {
         await createPost(post);
-      } catch (err) {
+      }
+      catch (err) {
         expect(err).toBeInstanceOf(mongoose.Error.ValidationError);
         expect(err.message).toContain("`title` is required");
       }
@@ -89,13 +90,13 @@ describe("Posts", () => {
 
       // We cannot directly compare lists of documents returned by Mongoose because the documents will have hidden metadata
       // that Jest will attempt to compare
-      expect(posts.map((p) => p.createdAt)).toEqual(sortedSamplePosts.map((p) => p.createdAt));
+      expect(posts.map(p => p.createdAt)).toEqual(sortedSamplePosts.map(p => p.createdAt));
     });
 
     test("list all posts by 'updatedAt' ascending: it should succeed", async () => {
       const posts = await listAllPosts({ sortBy: "updatedAt", sortOrder: "ascending" });
       const sortedSamplePosts = createdSamplePosts.sort((a, b) => a.updatedAt - b.updatedAt);
-      expect(posts.map((p) => p.updatedAt)).toEqual(sortedSamplePosts.map((p) => p.updatedAt));
+      expect(posts.map(p => p.updatedAt)).toEqual(sortedSamplePosts.map(p => p.updatedAt));
     });
 
     test("list posts filtered by author: it should succeed", async () => {
