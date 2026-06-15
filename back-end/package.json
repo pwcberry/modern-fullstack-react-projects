@@ -17,7 +17,7 @@
     "lint": "eslint .",
     "format": "eslint --fix .",
     "start": "node --env-file=.env dist/server.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "vitest"
   },
   "license": "UNLICENSED",
   "dependencies": {

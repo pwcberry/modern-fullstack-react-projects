@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { beforeAll, afterAll } from "@jest/globals";
+import { beforeAll, afterAll } from "vitest";
 import { initDatabase } from "../src/db/init";
 
 beforeAll(async () => {

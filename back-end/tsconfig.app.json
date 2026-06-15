@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es2023",
+    "lib": [
+      "ES2023"
+    ],
+    "module": "esnext",
+    "types": [
+      "node"
+    ],
+    "skipLibCheck": true,
+    "strict": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "rewriteRelativeImportExtensions": true,
+    "moduleResolution": "node",
+    /* Option 'moduleResolution=node10' is deprecated and will stop functioning in TypeScript 7.0 */
+    "ignoreDeprecations": "6.0",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
