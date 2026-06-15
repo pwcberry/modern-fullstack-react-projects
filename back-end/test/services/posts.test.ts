@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { beforeEach, describe, expect, test } from "@jest/globals";
-import * as service from "../../src/services/posts";
-import { Post } from "../../src/db/models/post";
+import { beforeEach, describe, expect, test } from "vitest";
+import * as service from "../../src/services/posts.ts";
+import { Post } from "../../src/db/models/post.ts";
 
 const samplePosts = [
   { title: "Learning Redux", author: "Daniel Bugl", tags: ["redux"] },
