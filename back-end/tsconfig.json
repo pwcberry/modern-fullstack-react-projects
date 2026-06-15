@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "strict": true,
     "outDir": "./dist",
+    "rootDir": ".",
     "rewriteRelativeImportExtensions": true,
     "moduleResolution": "node",
     /* Option 'moduleResolution=node10' is deprecated and will stop functioning in TypeScript 7.0 */
@@ -23,7 +24,6 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "./server.ts",
     "src/**/*.ts"
   ]
 }
