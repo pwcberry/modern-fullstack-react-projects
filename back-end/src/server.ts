@@ -1,5 +1,5 @@
-import app from "./src/app.ts";
-import { initDatabase } from "./src/db/init.ts";
+import app from "./app.ts";
+import { initDatabase } from "./db/init.ts";
 
 const PORT: number = Number(process.env.PORT ?? 3000);
 

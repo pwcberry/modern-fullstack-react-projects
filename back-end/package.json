@@ -5,9 +5,14 @@
   "description": "",
   "type": "module",
   "main": "dist/server.js",
-  "files": ["dist/**/*.js"],
+  "files": [
+    "dist/**/*.js"
+  ],
   "scripts": {
-    "dev": "nodemon server.js",
+    "build": "npm run clean && npm run compile",
+    "compile": "tsc",
+    "clean": "rm -r dist",
+    "dev": "tsx --env-file=.env --watch src/server.ts",
     "init:db": "docker compose up",
     "lint": "eslint .",
     "format": "eslint --fix .",
@@ -31,9 +36,8 @@
     "@types/node": "^25.9.3",
     "eslint": "^9.39.4",
     "globals": "^16.5.0",
-    "jest": "^30.0.5",
     "mongodb-memory-server": "^10.2.0",
-    "nodemon": "^3.1.10",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.61.0",
     "vitest": "^4.1.8"
