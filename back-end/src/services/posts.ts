@@ -1,5 +1,6 @@
 import { Post } from "../db/models/post.ts";
 import type { IPost } from "../db/models/post.ts";
+import { type DeleteResult } from "mongodb";
 
 type SortOrder = "ascending" | "descending";
 
@@ -8,7 +9,10 @@ interface ListOptions {
   sortOrder?: SortOrder;
 }
 
-async function listPosts(query: Record<string, unknown> = {}, { sortBy = "createdAt", sortOrder = "descending" }: ListOptions = {}): Promise<IPost[]> {
+async function listPosts(query: Record<string, unknown> = {}, {
+  sortBy = "createdAt",
+  sortOrder = "descending",
+}: ListOptions = {}): Promise<IPost[]> {
   return Post.find(query).sort({ [sortBy]: sortOrder as SortOrder });
 }
 
@@ -37,12 +41,8 @@ async function updatePost(id: string, { title, author, contents, tags }: Partial
   return Post.findOneAndUpdate({ _id: id }, { $set: { title, author, contents, tags } }, { new: true });
 }
 
-async function deletePost(id: string) {
+async function deletePost(id: string): Promise<DeleteResult> {
   return Post.deleteOne({ _id: id });
 }
 
 export { createPost, listAllPosts, listPostsByAuthor, listPostsByTag, getPostById, updatePost, deletePost };
-
-
-
-
