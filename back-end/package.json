@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "npm run clean && npm run compile",
-    "compile": "tsc",
+    "compile": "tsc --project tsconfig.app.json",
     "clean": "rm -r dist",
     "dev": "tsx --env-file=.env --watch src/server.ts",
     "init:db": "docker compose up",
