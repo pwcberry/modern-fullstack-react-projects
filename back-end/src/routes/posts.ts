@@ -1,10 +1,11 @@
 import * as service from "../services/posts.ts";
 import type { Express, Request, Response } from "express";
+import type { ListOptions, SortOrder } from "../types.ts";
 
 function mountGetRoutes(app: Express): void {
   app.get("/api/v1/posts", async (req: Request, res: Response) => {
-    const { sortby, orderby, author, tag } = req.query as Record<string, any>;
-    const options = { sortBy: sortby, sortOrder: orderby };
+    const { sortby, orderby, author, tag } = req.query as Record<string, string>;
+    const options: ListOptions = { sortBy: sortby, sortOrder: orderby as SortOrder };
 
     try {
       if (author && tag) {
@@ -92,6 +93,3 @@ export function mountRoutes(app: Express): void {
   mountPatchRoutes(app);
   mountDeleteRoutes(app);
 }
-
-
-

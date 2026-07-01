@@ -1,4 +1,5 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
+import type { TestGlobals } from "./types.ts";
 
 export default async function globalSetup(): Promise<void> {
   const instance = await MongoMemoryServer.create({
@@ -7,7 +8,6 @@ export default async function globalSetup(): Promise<void> {
     },
   });
 
-  (global as any).__MONGOINSTANCE = instance;
+  (global as unknown as TestGlobals).__MONGOINSTANCE = instance;
   process.env.DATABASE_URL = instance.getUri();
 }
-

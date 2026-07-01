@@ -2,12 +2,10 @@ import { configDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    exclude: [...configDefaults.exclude, "packages/template/*"],
+    exclude: [...configDefaults.exclude, "packages/template/*", "./test/*.ts"],
     include: ["./test/**/*.ts"],
-    setupFiles:[
-      "./test/globalSetup.ts",
-      "./test/globalTeardown.ts",
-      "./test/setupFileAfterEnv.ts"
-    ]
-  }
+    setupFiles: [
+      "./test/setupFile.ts",
+    ],
+  },
 });

@@ -9,4 +9,3 @@ export async function initDatabase(): Promise<typeof mongoose> {
 
   return mongoose.connect(DATABASE_URL as string);
 }
-
