@@ -7,3 +7,4 @@ export async function initDatabase(mongoUri = process.env.DATABASE_URL): Promise
 
   return mongoose.connect(mongoUri as string);
 }
+
