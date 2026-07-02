@@ -3,7 +3,7 @@ import { beforeAll, beforeEach, describe, expect, inject, test } from "vitest";
 import * as service from "../../src/services/posts.ts";
 import type { IPost } from "../../src/db/models/post.ts";
 import { Post } from "../../src/db/models/post.ts";
-import { initDatabase} from "../../src/db/init.ts";
+import { initDatabase } from "../../src/db/init.ts";
 import type { Nullable } from "../../src/types.ts";
 
 const samplePosts = [
@@ -65,7 +65,8 @@ describe("Posts", () => {
 
       try {
         await service.createPost(post);
-      } catch (err) {
+      }
+      catch (err) {
         expect(err).toBeInstanceOf(mongoose.Error.ValidationError);
         expect((err as Error).message).toContain("`title` is required");
       }
