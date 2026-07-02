@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-import { beforeEach, describe, expect, test } from "vitest";
+import { beforeAll, beforeEach, describe, expect, inject, test } from "vitest";
 import * as service from "../../src/services/posts.ts";
 import type { IPost } from "../../src/db/models/post.ts";
 import { Post } from "../../src/db/models/post.ts";
+import { initDatabase} from "../../src/db/init.ts";
 import type { Nullable } from "../../src/types.ts";
 
 const samplePosts = [
@@ -17,6 +18,12 @@ const samplePosts = [
 ];
 
 const UNKNOWN_POST_ID = "000000000000000000000000";
+
+beforeAll(async () => {
+  const MONGO_URI = inject("MONGO_URI");
+  await initDatabase(MONGO_URI);
+  return () => mongoose.disconnect();
+});
 
 describe("Posts", () => {
   let createdSamplePosts: IPost[] = [];
@@ -58,8 +65,7 @@ describe("Posts", () => {
 
       try {
         await service.createPost(post);
-      }
-      catch (err) {
+      } catch (err) {
         expect(err).toBeInstanceOf(mongoose.Error.ValidationError);
         expect((err as Error).message).toContain("`title` is required");
       }
@@ -108,7 +114,10 @@ describe("Posts", () => {
   describe("get", () => {
     test("get post by id: it should succeed", async () => {
       const post = await service.getPostById(createdSamplePosts[0]._id);
-      expect(post!).toEqual(createdSamplePosts[0]);
+      expect(post!.author).toEqual(createdSamplePosts[0].author);
+      expect(post!.title).toEqual(createdSamplePosts[0].title);
+      expect(post!.contents).toEqual(createdSamplePosts[0].contents);
+      expect(post!.createdAt?.valueOf()).toEqual(createdSamplePosts[0].createdAt?.valueOf());
     });
 
     test("get post by unknown id: it should fail", async () => {

@@ -4,8 +4,6 @@ export default defineConfig({
   test: {
     exclude: [...configDefaults.exclude, "packages/template/*", "./test/*.ts"],
     include: ["./test/**/*.ts"],
-    setupFiles: [
-      "./test/setupFile.ts",
-    ],
+    globalSetup: ["./test/globalSetup.ts"],
   },
 });
