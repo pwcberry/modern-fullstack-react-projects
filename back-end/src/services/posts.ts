@@ -1,13 +1,7 @@
 import { Post } from "../db/models/post.ts";
 import type { IPost } from "../db/models/post.ts";
-import { type DeleteResult } from "mongodb";
-
-type SortOrder = "ascending" | "descending";
-
-interface ListOptions {
-  sortBy?: string;
-  sortOrder?: SortOrder;
-}
+import type { DeleteResult, UpdateResult } from "mongodb";
+import type { ListOptions, SortOrder, Nullable } from "../types.ts";
 
 async function listPosts(query: Record<string, unknown> = {}, {
   sortBy = "createdAt",
@@ -33,11 +27,16 @@ async function listPostsByTag(tags: string | string[], options?: ListOptions): P
   return await listPosts({ tags }, options);
 }
 
-async function getPostById(id: string) {
+async function getPostById(id: string): Promise<Nullable<IPost>> {
   return Post.findById(id);
 }
 
-async function updatePost(id: string, { title, author, contents, tags }: Partial<IPost>) {
+async function updatePost(id: string, {
+  title,
+  author,
+  contents,
+  tags,
+}: Partial<IPost>): Promise<Nullable<UpdateResult>> {
   return Post.findOneAndUpdate({ _id: id }, { $set: { title, author, contents, tags } }, { new: true });
 }
 

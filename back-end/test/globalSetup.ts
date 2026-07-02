@@ -1,13 +1,21 @@
+import type { TestProject } from "vitest/node";
 import { MongoMemoryServer } from "mongodb-memory-server";
 
-export default async function globalSetup(): Promise<void> {
-  const instance = await MongoMemoryServer.create({
-    binary: {
-      version: "7.0.12",
-    },
-  });
-
-  (global as any).__MONGOINSTANCE = instance;
-  process.env.DATABASE_URL = instance.getUri();
+declare module "vitest" {
+  export interface ProvidedContext {
+    MONGO_URI: string;
+  }
 }
 
+export default async function setup({ provide }: TestProject) {
+  const instance = await MongoMemoryServer.create();
+  const uri = instance.getUri();
+
+  provide("MONGO_URI", uri);
+
+  // (global as unknown as TestGlobals).__MONGOINSTANCE = instance;
+  // process.env.DATABASE_URL = instance.getUri();
+  return async () => {
+    await instance.stop();
+  };
+}
