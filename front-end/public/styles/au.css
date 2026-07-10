@@ -1,0 +1,57 @@
+:root {
+    /* Primary */
+    --color-charcoal: #2A2A2A;
+    --color-sandstone: #F0ECE1;
+    --color-white: #FFFFFF;
+
+    /* Primary accents */
+    --color-orange: #fc5400;
+    --color-mid-teal: #176077;
+    --color-dark-sandstone: #D0CCBF;
+    --color-mid-charcoal: #636466;
+
+    /* Secondary accents */
+    --color-aqua: #52c9cc;
+    --color-yellow: #ffd10a;
+    --color-lilac: #9d87d2;
+    --color-burgundy: #a61d13;
+
+    /* Highlights */
+    --color-green: #2dcb48;
+    --color-mid-orange: #ff6c00;
+    --color-red: #F43319;
+
+    /* Validation */
+    --color-success: var(--color-green);
+    --color-warning: var(--color-mid-orange);
+    --color-error: var(--color-red);
+
+    /* PHI Variants */
+    --color-ccc: var(--color-orange);
+    --color-psm: var(--color-mid-teal);
+    --color-tcs: var(--color-aqua);
+
+    /* Color variants */
+    --color-dark-teal: #0A4C62; /* #023748; */
+    --color-light-orange: #ff864a;
+    --color-dark-orange: #e66100;
+    --color-violet: #704fbd;
+    --color-medium-green: #007e00;
+}
+
+:root {
+    font-size: 16px;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
