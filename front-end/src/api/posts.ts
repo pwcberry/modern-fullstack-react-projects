@@ -18,3 +18,13 @@ export async function getPosts(queryParams?: PostQueryParams): Promise<Post[]> {
   const response = await fetch(uri);
   return await response.json() as Post[];
 }
+
+export async function createPost(post: Post): Promise<Post> {
+  const uri = new URL("./posts", import.meta.env.VITE_API_URL_STEM);
+  const response = await fetch(uri, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(post),
+  });
+  return await response.json() as Post;
+}
