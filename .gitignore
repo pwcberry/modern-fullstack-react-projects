@@ -11,6 +11,7 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 package-lock.json
+.yarnrc.yml
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -146,4 +147,4 @@ package.yarn.json
 ### IDEs ###
 .idea
 .vscode
-
+*.private.env.json

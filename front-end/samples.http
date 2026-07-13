@@ -1,10 +1,9 @@
 ### Sample routes to test the API
 
-###
-GET http://localhost:3000/api/v1/posts?tag=mongoose
+GET http://localhost:3000/api/v1/posts?tag=mongo
 
 ###
-GET http://localhost:3000/api/v1/posts/68996cdb4fb3b4bb9f172f25
+GET http://localhost:3000/api/v1/posts/{{postId}}
 
 ###
 POST http://localhost:3000/api/v1/posts
@@ -17,7 +16,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/api/v1/posts/68a7b82d9e65e7317e50cab3
+PATCH http://localhost:3000/api/v1/posts/{{postId}}
 Content-Type: application/json
 
 {
@@ -28,5 +27,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/api/v1/posts/68a7b82d9e65e7317e50cab3
+DELETE http://localhost:3000/api/v1/posts/{{postId}}
 

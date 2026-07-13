@@ -4,3 +4,6 @@ export type Post = {
   contents?: string;
   author?: string;
 };
+
+// eslint-disable-next-line
+export type EventValueHandler<T> = (data: T) => void;
