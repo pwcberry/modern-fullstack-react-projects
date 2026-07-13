@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import PostList from "./component/PostList";
-import CreatePost from "./component/CreatePost";
-import PostFilter from "./component/PostFilter";
-import PostSorting from "./component/PostSorting";
-import { getPosts } from "./api/posts.ts";
+import PostList from "./components/PostList";
+import CreatePost from "./components/CreatePost";
+import PostFilter from "./components/PostFilter";
+import PostSorting from "./components/PostSorting";
+import { getPosts } from "./api/posts";
 
 function Blog() {
   const postsQuery = useQuery({
