@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
-import { beforeAll, beforeEach, describe, expect, inject, test } from "vitest";
+import {beforeAll, beforeEach, describe, expect, inject, test} from "vitest";
 import * as service from "../../src/services/posts.ts";
-import type { IPost } from "../../src/db/models/post.ts";
-import { Post } from "../../src/db/models/post.ts";
-import { initDatabase } from "../../src/db/init.ts";
-import type { Nullable } from "../../src/types.ts";
+import type {IPost} from "../../src/db/models/post.ts";
+import {Post} from "../../src/db/models/post.ts";
+import {initDatabase} from "../../src/db/init.ts";
+import type {Nullable} from "../../src/types.ts";
 
 const samplePosts = [
-  { title: "Learning Redux", author: "Daniel Bugl", tags: ["redux"] },
-  { title: "Learn React Hooks", author: "Daniel Bugl", tags: ["react"] },
+  {title: "Learning Redux", author: "Daniel Bugl", tags: ["redux"]},
+  {title: "Learn React Hooks", author: "Daniel Bugl", tags: ["react"]},
   {
     title: "Full-Stack React Projects",
     author: "Daniel Bugl",
     tags: ["react", "nodejs"],
   },
-  { title: "Guide to TypeScript" },
+  {title: "Guide to TypeScript"},
 ];
 
 const UNKNOWN_POST_ID = "000000000000000000000000";
@@ -65,8 +65,7 @@ describe("Posts", () => {
 
       try {
         await service.createPost(post);
-      }
-      catch (err) {
+      } catch (err) {
         expect(err).toBeInstanceOf(mongoose.Error.ValidationError);
         expect((err as Error).message).toContain("`title` is required");
       }
@@ -96,7 +95,7 @@ describe("Posts", () => {
     });
 
     test("list all posts by 'updatedAt' ascending: it should succeed", async () => {
-      const posts = await service.listAllPosts({ sortBy: "updatedAt", sortOrder: "ascending" }) as IPost[];
+      const posts = await service.listAllPosts({sortBy: "updatedAt", sortOrder: "ascending"}) as IPost[];
       const sortedSamplePosts = createdSamplePosts.sort((a, b) => (a.updatedAt!.valueOf()) - (b.updatedAt!.valueOf()));
       expect(posts.map(p => p.updatedAt)).toEqual(sortedSamplePosts.map(p => p.updatedAt));
     });
@@ -147,6 +146,9 @@ describe("Posts", () => {
     });
 
     test("update post: it should change the timestamp", async () => {
+      // Delay update
+      await new Promise(resolve => setTimeout(resolve, 50));
+
       await service.updatePost(createdSamplePosts[0]._id, {
         author: "Anton Chekhov",
       });
@@ -156,7 +158,7 @@ describe("Posts", () => {
     });
 
     test("update post with unknown id: it should fail", async () => {
-      const post = await service.updatePost(UNKNOWN_POST_ID, { title: "R Barthes" });
+      const post = await service.updatePost(UNKNOWN_POST_ID, {title: "R Barthes"});
       expect(post).toBeNull();
     });
   });
